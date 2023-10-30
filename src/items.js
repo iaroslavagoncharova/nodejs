@@ -43,7 +43,7 @@ const items = [
         // check if body is "valid"
         if (!body.name) {
           res.writeHead(400, {'Content-Type': 'application/json'});
-          res.end(`{"message": "Missing item name"}`);
+          res.end(`{"message": "Missing data"}`);
           return;
         }
         // check id of the last item in items and add 1
@@ -72,7 +72,7 @@ const items = [
         // check if body is "valid"
         if (!body.name) {
           res.writeHead(400, {'Content-Type': 'application/json'});
-          res.end(`{"message": "Missing new data"}`);
+          res.end(`{"message": "Missing data"}`);
           return;
         }
         item.name = body.name;
