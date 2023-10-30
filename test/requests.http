@@ -16,7 +16,7 @@ content-type: application/json
 ### POST /items error
 POST http://localhost:3000/items
 
-{"jotain": "jotain"}
+{"hinta": "3"}
 
 ### PUT /items/:id
 PUT http://localhost:3000/items/5
