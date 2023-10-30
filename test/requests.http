@@ -5,13 +5,13 @@ GET http://localhost:3000/
 GET http://localhost:3000/items
 
 ### GET /items/:id
-GET http://localhost:3000/items/20
+GET http://localhost:3000/items/4
 
 ### POST /items
 POST http://localhost:3000/items
 content-type: application/json
 
-{"name": "kurkku"}
+{"name": "kahvi"}
 
 ### POST /items error
 POST http://localhost:3000/items
@@ -19,10 +19,10 @@ POST http://localhost:3000/items
 {"jotain": "jotain"}
 
 ### PUT /items/:id
-PUT http://localhost:3000/items/24
+PUT http://localhost:3000/items/5
 content-type: application/json
 
-{"name":"delete kurkku"}
+{"name": "tomaatti"}
 
 ### DELETE /items/:id
-DELETE http://localhost:3000/items/24
+DELETE http://localhost:3000/items/3
