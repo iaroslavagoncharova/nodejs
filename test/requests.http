@@ -2,7 +2,7 @@
 GET http://localhost:3000/
 
 ### GET /api/media
-GET http://localhost:3000/api/media
+GET http://localhost:3000/api/media?limit=6
 
 ### GET /api/media/:id
 GET http://localhost:3000/api/media/9592
@@ -29,4 +29,4 @@ content-type: application/json
 }
 
 ### DELETE /api/media/:id
-DELETE http://localhost:3000/api/media/9592
+DELETE http://localhost:3000/api/media/9590

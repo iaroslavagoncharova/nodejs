@@ -13,6 +13,7 @@ app.set('view engine', 'pug');
 app.set('views', 'src/views')
 app.use(express.json());
 app.use('/docs', express.static(path.join(__dirname, '../docs')));
+app.use('/media', express.static(path.join(__dirname, './media')));
 // simple custom middleware for login/debugging 
 app.use((req, res, next) => {
   console.log('Time:', Date.now(), req.method, req.url)

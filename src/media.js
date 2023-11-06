@@ -62,18 +62,25 @@ const getItems = (req, res) => {
     console.log('getItems');
     const limit = req.query.limit;
     // TODO: check that the param value is int before using
+    if (mediaItems) {
     if (limit) {
+      res.status(200);
       res.json(mediaItems.slice(0, limit));
     } else {
+      res.status(200);
       res.json(mediaItems);
     }
-  };
-
+  } else {
+    res.status(404);
+    res.json({message: "Items not found"});
+}
+};
   const getItemsById = (req, res) => {
     // if item with id exists send it, otherwise send 404
     console.log('getItemsById', req.params);
     const item = mediaItems.find((element) => element.media_id == req.params.id);
     if (item) {
+      res.status(200);
       res.json(item);
     } else {
       res.status(404);
@@ -86,23 +93,33 @@ const getItems = (req, res) => {
     console.log('postItem', req.body.filename);
     if (req.body.filename) {
       mediaItems.push({media_id: Math.floor(100 + Math.random() * 900), filename: req.body.filename, title: req.body.title, description: req.body.description, user_id: req.body.user_id, media_type: req.body.media_type});
-      res.sendStatus(201);
+      res.status(201);
+      res.json({message: `Item ${req.body.filename} posted`});
     } else {
-      res.sendStatus(400);
+      res.status(400);
+      res.json({message: "Missing filename"})
     }
   };
 
   const putItem = (req, res) => {
     console.log('putItem with id', req.params.id);
-    // if item exists in the array, update it based on id, otherwise send 404
-    const item = mediaItems.find((element) => element.media_id == req.params.id);
-    if (item) {
-        item.title = req.body.title;
-        item.description = req.body.description
-        res.sendStatus(200)
-    }
+    if (req.body.title && req.body.description) {
+      // if item exists in the array, update it based on id, otherwise send 404
+      const item = mediaItems.find((element) => element.media_id == req.params.id);
+      if (item) {
+          item.title = req.body.title;
+          item.description = req.body.description;
+          res.status(200);
+          res.json({message: `Item with id ${req.params.id} changed`});
+      } else {
+        res.status(404);
+        res.json({message: "Item not found"})
+      }
+} else {
+  res.status(400);
+  res.json({message: "Missing data"})
+}
 };
-
   const deleteItem = (req, res) => {
     console.log('deleteItem', req.params);
     // if item exists in the array, delete it based on id, otherwise send 404
@@ -110,7 +127,7 @@ const getItems = (req, res) => {
     // when item is not found, index -1 is returned; if-statement is used here to prevent it
     if (index != -1) {
     mediaItems.splice(index, 1);
-    res.status(201);
+    res.status(204);
     }
     else {
         res.status(404);
