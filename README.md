@@ -15,7 +15,7 @@ The application provides access to data in JSON format, including media objects 
 ### Adding New Data
 - Add a new media object: `POST /api/media`
 - Add a new user profile: `POST /api/user`
-- The POST request should include all necessary information about the item/user, except for an ID, which is automatically generated using Math.random()
+- The POST request should include all necessary information about the item/user, except for an ID, which is automatically generated using `Math.random()`
 
 ### Modifying Data
 - Modify an item's title and description based on its ID: `PUT /api/media/:id`
