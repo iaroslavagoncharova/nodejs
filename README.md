@@ -1,9 +1,10 @@
-## REST API Functionality
+## REST API (using Express and Pug)
 The REST API includes functionality for:
 - Reading data from the server (using the GET method)
 - Sending data to the server (using the POST method)
 - Updating existing data on the server (using the PUT method)
 - Deleting existing data from the server (using the DELETE method)
+It uses Express framework for implementing API functionality and Pug template engine for an HTML landing page.
 
 ### JSON Data Retrieval
 The application provides access to data in JSON format, including media objects and user profiles:
