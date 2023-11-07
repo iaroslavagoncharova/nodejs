@@ -1,0 +1,32 @@
+### GET /
+GET http://localhost:3000/
+
+### GET /api/user
+GET http://localhost:3000/api/user
+
+### GET /api/user/:id
+GET http://localhost:3000/api/user/305
+
+### POST /api/user
+POST http://localhost:3000/api/user
+content-type: application/json
+
+{
+  "username": "newUser",
+  "password": "******",
+  "email": "newuser@new.com",
+  "user_level_id": 2
+}
+
+### PUT /api/user/:id
+PUT http://localhost:3000/api/user/305
+content-type: application/json
+
+{
+  "password": "******",
+  "email": "donat@example.com"
+}
+
+
+### DELETE /api/user/:id
+DELETE http://localhost:3000/api/user/305

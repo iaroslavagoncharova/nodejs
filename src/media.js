@@ -52,7 +52,7 @@ const mediaItems = [
   ]
 
   /**
-* Gets all items
+* Gets all items or a limited set of items if specified
 *
 * @param {object} req - http request
 * @param {object} res - http response
@@ -61,9 +61,8 @@ const mediaItems = [
 const getItems = (req, res) => {
     console.log('getItems');
     const limit = req.query.limit;
-    // TODO: check that the param value is int before using
     if (mediaItems) {
-    if (limit) {
+    if (!isNaN(parseInt(limit))) {
       res.status(200);
       res.json(mediaItems.slice(0, limit));
     } else {
@@ -75,6 +74,14 @@ const getItems = (req, res) => {
     res.json({message: "Items not found"});
 }
 };
+
+/**
+ * Gets one item based on its id
+ *
+ * @param {object} req - http request
+ * @param {object} res - http response
+ */
+
   const getItemsById = (req, res) => {
     // if item with id exists send it, otherwise send 404
     console.log('getItemsById', req.params);
@@ -88,7 +95,13 @@ const getItems = (req, res) => {
     }
   };
 
-    
+  /**
+ * Posts an item
+ *
+ * @param {object} req - http request with item information
+ * @param {object} res - http response
+ */
+
   const postItem = (req, res) => {
     console.log('postItem', req.body.filename);
     if (req.body.filename) {
@@ -100,6 +113,13 @@ const getItems = (req, res) => {
       res.json({message: "Missing filename"})
     }
   };
+
+/**
+ * Modifies item's details based on its id
+ *
+ * @param {object} req - http request with updated item details
+ * @param {object} res - http response
+ */
 
   const putItem = (req, res) => {
     console.log('putItem with id', req.params.id);
@@ -120,6 +140,14 @@ const getItems = (req, res) => {
   res.json({message: "Missing data"})
 }
 };
+
+/**
+ * Deletes an item based on its id
+ *
+ * @param {object} req - http request with item id
+ * @param {object} res - http response
+ */
+
   const deleteItem = (req, res) => {
     console.log('deleteItem', req.params);
     // if item exists in the array, delete it based on id, otherwise send 404
