@@ -1,8 +1,9 @@
 import express from 'express';
 import path from 'path';
 import {fileURLToPath} from 'url';
-import { getItems, getItemsById, deleteItem, putItem, postItem } from './media.js';
-import { getUsers, getUsersById, postUser, putUser, deleteUser} from './users.js';
+import mediaRouter from './routes/media-router.mjs';
+import userRouter from './routes/user-router.mjs';
+import { logger } from './middlewares/middlewares.mjs';
 
 const hostname = '127.0.0.1';
 const app = express();
@@ -13,35 +14,25 @@ const __dirname = path.dirname(__filename);
 app.set('view engine', 'pug');
 app.set('views', 'src/views')
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use('/docs', express.static(path.join(__dirname, '../docs')));
-app.use('/media', express.static(path.join(__dirname, '/media')));
+// serve uploaded mediafiles url: /media/{file}
+app.use('/media', express.static(path.join(__dirname, '../uploads')));
 
+// simple custom middleware for logging/debugging all requests
+app.use(logger);
+
+// render pug a file (home.pug) example
 app.get('/', (req, res) => {
   const values = {title: "Media REST API", message: "This API has a basic functionality and can be used to retrieve, create, change, or delete mock data, such as media objects or users. This functionality is achieved by using basic REST-methods, such as GET, POST, PUT and DELETE, and displaying status codes 200, 201, 204, 404 and 400. Mock media files are also present as real images and can be served anywhere in the API"};
   res.render('home', values);
 });
 
-// get all items
-app.get('/api/media', getItems);
-// get an item by id
-app.get('/api/media/:id', getItemsById);
-// modify an item by id
-app.put('/api/media/:id', putItem);
-// add a new item
-app.post('/api/media', postItem);
-// remove an existing item by id
-app.delete('/api/media/:id', deleteItem);
+// media endpoints
+app.use('/api/media', mediaRouter);
 
-// get all users
-app.get('/api/user', getUsers);
-// get a user by id
-app.get('/api/user/:id', getUsersById);
-// modify a user by id
-app.put('/api/user/:id', putUser);
-// add a new user
-app.post('/api/user', postUser);
-// remove an existing user by id
-app.delete('/api/user/:id', deleteUser);
+// user endpoints
+app.use('/api/users', userRouter);
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
