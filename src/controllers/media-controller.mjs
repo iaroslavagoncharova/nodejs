@@ -1,5 +1,7 @@
 // can be placed to a separate json file
 
+import { fetchAllMedia, fetchMediaById } from "../models/media-model.mjs";
+
 const mediaItems = [
     {
       "media_id": 9632,
@@ -53,16 +55,21 @@ const mediaItems = [
     }
   ]
 
-const getMedia = (req, res) => {
+const getMedia = async (req, res) => {
+  const mediaItems = await fetchAllMedia();
     res.json(mediaItems);
-}
+};
 
-const getMediaById = (req, res) => {
-    const media = mediaItems.find((item) => item.media_id == req.params.id);
-    if (media) {
-        res.json(media);
+const getMediaById = async (req, res) => {
+    const result = await fetchMediaById(req.params.id); 
+    if (result) {
+      if (result.error) {
+      res.status(500);
+      }
+      res.json(result);
     } else {
-        res.sendStatus(404);
+        res.status(404);
+        res.json({error: 'Not found', media_id: req.params.id});
     }
 };
 
