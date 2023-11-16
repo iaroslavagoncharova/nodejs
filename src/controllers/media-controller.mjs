@@ -1,6 +1,6 @@
 // can be placed to a separate json file
 
-import { fetchAllMedia, fetchMediaById } from "../models/media-model.mjs";
+import { addMedia, fetchAllMedia, fetchMediaById } from "../models/media-model.mjs";
 
 const mediaItems = [
     {
@@ -73,24 +73,16 @@ const getMediaById = async (req, res) => {
     }
 };
 
-const postMedia = (req, res) => {
+const postMedia = async (req, res) => {
     console.log('uploaded file', req.file);
     console.log('uploaded form data', req.body);
     const {title, description, user_id} = req.body;
     const {filename, mimetype, size} = req.file;
-    const newId = mediaItems[0].media_id + 1;
     if (filename && title && user_id) {
-        mediaItems.unshift({
-            media_id: newId,
-            filename,
-            title,
-            description,
-            user_id,
-            media_type: mimetype,
-            filesize: size
-        });
-        res.status(201);
-        res.json({message: 'New media item added', media_id: newId});
+      const newMedia = {title, description, user_id, filename, mimetype, size};
+      const result = await addMedia(newMedia);
+      res.status(201);
+      res.json({message: 'New media item added', ...result});
     } else {
       res.sendStatus(400);
     }
