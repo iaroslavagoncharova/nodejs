@@ -4,6 +4,7 @@ import {fileURLToPath} from 'url';
 import mediaRouter from './routes/media-router.mjs';
 import userRouter from './routes/user-router.mjs';
 import { logger } from './middlewares/middlewares.mjs';
+import commentsRouter from './routes/comments-router.mjs';
 
 const hostname = '127.0.0.1';
 const app = express();
@@ -33,6 +34,10 @@ app.use('/api/media', mediaRouter);
 
 // user endpoints
 app.use('/api/users', userRouter);
+
+// likes endpoints
+
+app.use('/api/comments', commentsRouter);
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);

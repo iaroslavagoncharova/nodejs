@@ -1,22 +1,3 @@
-const putItem = (req, res) => {
-    console.log('putItem with id', req.params.id);
-    if (req.body.title && req.body.description) {
-      // if item exists in the array, update it based on id, otherwise send 404
-      const item = mediaItems.find((element) => element.media_id == req.params.id);
-      if (item) {
-          item.title = req.body.title;
-          item.description = req.body.description;
-          res.status(200);
-          res.json({message: `Item with id ${req.params.id} changed`});
-      } else {
-        res.status(404);
-        res.json({message: "Item not found"})
-      }
-} else {
-  res.status(400);
-  res.json({message: "Missing data"})
-}
-};
 
 /**
  * Deletes an item based on its id
