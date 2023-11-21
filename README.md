@@ -4,7 +4,7 @@ The Express app includes functionality for:
 - Sending data to the database (using the POST method)
 - Updating existing data in the database (using the PUT method)
 - Deleting existing data from the database (using the DELETE method)
-- It uses Express framework for implementing API functionality, MVC type-based structure, and a Media Sharing App - database
+- It uses Express framework for implementing API functionality, react.Router() for different routes to separate endpoints, Multer for uploading media items, MVC type-based structure, and a Media Sharing App - database (mysql2)
 
 ### Data Retrieval
 The application provides access to data fetched from the database, including media items, users, and comments:
