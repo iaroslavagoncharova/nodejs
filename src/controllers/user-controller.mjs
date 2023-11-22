@@ -1,4 +1,4 @@
-import {fetchAllUsers, fetchUserById, addUser, changeUser, removeUser} from '../models/user-model.mjs';
+import {fetchAllUsers, fetchUserById, addUser, changeUser, removeUser, login} from '../models/user-model.mjs';
 
 const getUsers = async (req, res) => {
     const Users = await fetchAllUsers();
