@@ -1,4 +1,5 @@
 import {fetchAllUsers, fetchUserById, addUser, changeUser, removeUser, login} from '../models/user-model.mjs';
+import { validationResult } from 'express-validator';
 
 const getUsers = async (req, res) => {
     const Users = await fetchAllUsers();
@@ -18,40 +19,65 @@ const getUsersById = async (req, res) => {
     }
 };
 
-const postUser = async (req, res) => {
-    console.log('created user', req.body);
-    const {username, password, email, user_level_id} = req.body;
-    if (username && password && email && user_level_id) {
-      const newUser = {username, password, email, user_level_id};
-      const result = await addUser(newUser);
-      res.status(201);
-      res.json({message: 'New user added', ...result});
-    } else {
-      res.sendStatus(400);
+const postUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log('validation errors', errors.array());
+    const error = new Error('invalid input fields');
+    error.status = 400;
+    return next(error);
+  }
+    const newUserId = await addUser(req.body);
+    if (newUserId.error) {
+      const error = new Error(newUserId.error);
+      error.status = newUserId.status || 500;
+      return next(error)
     }
+    res.status(201).json({message: 'User added', user_id: newUserId});
 };
 
-const putUser = async (req, res) => {
-    const id = req.params.id;
+const putUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log('validation errors', errors.array());
+    const error = new Error('invalid input fields');
+    error.status = 400;
+    return next(error);
+  }
+    const user_id = +req.params.id;
+    const tokenUserId = req.user.user_id;
+    const levelId = req.user.user_level_id;
     const {username, password, email} = req.body;
     if (username && password && email) {
-      const updatedUser = req.body;
-      const result = await changeUser(updatedUser, id);
-      res.status(201);
-      res.json({message: 'User updated', ...result});
-    } else {
-      res.sendStatus(400);
+      const updatedUser = {username, password, email, tokenUserId, levelId};
+      const result = await changeUser(updatedUser, user_id);
+      if (result.error) {
+        const error = new Error(result.error);
+        error.status = result.status || 500;
+        return next(error);
     }
+      res.status(201).json({message: 'User updated', ...result});
+  } 
 };
 
-const deleteUser = async (req, res) => {
-    const result = await removeUser(req.params.id); 
-      if (result) {
-      res.sendStatus(204);
-    } else {
-        res.status(404);
-        res.json({error: 'Not found', user_id: req.params.id});
-    }
+const deleteUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log('validation errors', errors.array());
+    const error = new Error('Not found');
+    error.status = 404;
+    return next(error);
+  }
+    const user_id = +req.params.id;
+    const tokenUserId = req.user.user_id;
+    const levelId = req.user.user_level_id;
+    const result = await removeUser(user_id, tokenUserId, levelId); 
+    if (result.error) {
+      const error = new Error(result.error);
+      error.status = result.status || 500;
+      return next(error);
+  }
+      res.status(204).json({message: 'User deleted', ...result});
 };
 
 export {getUsers, getUsersById, postUser, putUser, deleteUser};

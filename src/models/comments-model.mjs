@@ -39,6 +39,9 @@ const createComment = async (comment) => {
   const params = [comment_id, media_id, user_id, comment_text, created_at];
   try {
   const result = await promisePool.query(sql, params);
+  if (result.error) {
+    return {error: result.error};
+  }
   console.log('result', result);
   return {comment_id: result[0].insertId};
   } catch (e) {
@@ -47,28 +50,43 @@ const createComment = async (comment) => {
   }
 };
 
-const updateComment = async (comment, comment_id) => {
-    const {comment_text} = comment;
-    const sql = `UPDATE Comments SET comment_text = ? WHERE comment_id = ?`;
-    const params = [comment_text, comment_id];
+const updateComment = async (comment, comment_id, user_id, levelId) => {
+  let sql, params;  
+  const {comment_text} = comment;
     try {
+      if (levelId === 1) {
+        sql = `UPDATE Comments SET comment_text = ? WHERE comment_id = ?`;
+        params = [comment_text, comment_id];
+    } else {
+      sql = `UPDATE Comments SET comment_text = ? WHERE comment_id = ? AND user_id = ?`;
+      params = [comment_text, comment_id, user_id];
+    }
     const result = await promisePool.query(sql, params);
-    console.log('result', result);
-    return {comment_id};
-    } catch (e) {
+    if (result[0].affectedRows === 0) {
+      return ({error: 'Not found or unauthorized', status: 404});
+    } else {
+      return {comment_id}
+    }
+  } catch (e) {
     console.error('error', e.message);
     return {error: e.message};
-    }
+  }
 };
 
-const removeComment = async (id) => {
+const removeComment = async (id, user_id, levelId) => {
+  let sql, params;
   try {
-    const params = [id];
-    const deleteData = 'DELETE FROM Comments WHERE comment_id=?';
-    const [rows] = await promisePool.query(deleteData, params);
+    if (levelId === 1) {
+      params = [id];
+      sql = 'DELETE FROM Comments WHERE comment_id=?';
+    } else {
+      params = [id, user_id];
+      sql = 'DELETE FROM Comments WHERE comment_id=? AND user_id=?';
+    }
+    const [rows] = await promisePool.query(sql, params);
     console.log('rows', rows);
     if (rows.affectedRows === 0) {
-      return false
+      return ({error: 'Not found or unauthorized', status: 404});
     };
     return true;
   } catch (e) {

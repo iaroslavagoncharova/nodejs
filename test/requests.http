@@ -3,18 +3,17 @@
 POST http://localhost:3000/api/auth/login
 content-type: application/json
 
-{"username": "JohnDoe", "password": "to-be-hashed-pw1"}
+{"username": "Bob", "password": "newsecret"}
+
+### POST /api/auth/login
+POST http://localhost:3000/api/auth/login
+content-type: application/json
+
+{"username": "JohnDoe3", "password": "newpassword"}
 
 ### GET my user info
 GET http://localhost:3000/api/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMiwidXNlcm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwidXNlcl9sZXZlbF9pZCI6MSwiaWF0IjoxNzAwNjcyMjM0fQ.0rIoOjTXU_aBpw4CbzvwSIQGBrqfOowKrL-gLYdF_Qw
-
-### GET /kukkuu
-GET http://localhost:3000/kukkuu
-
-### GET /something-else
-GET http://localhost:3000/morjes
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNywidXNlcm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwidXNlcl9sZXZlbF9pZCI6MiwiaWF0IjoxNzAxMTY1MzA2fQ.4v0AflcPscBdHxYr-2qIeNLY1xJw1HAt6wmB18RnxSs
 # Media sharing api http test requests
 
 ## /api/media endpoit
@@ -23,14 +22,14 @@ GET http://localhost:3000/morjes
 GET http://localhost:3000/api/media
 
 ### Get media by id
-GET http://localhost:3000/api/media/3
+GET http://localhost:3000/api/media/23
 
 ### Get media by id FAIL
 GET http://localhost:3000/api/media/959099
 
 ### Post media 
 POST http://localhost:3000/api/media
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMiwidXNlcm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwidXNlcl9sZXZlbF9pZCI6MSwiaWF0IjoxNzAwNjcyMjM0fQ.0rIoOjTXU_aBpw4CbzvwSIQGBrqfOowKrL-gLYdF_Qw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNywidXNlcm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwidXNlcl9sZXZlbF9pZCI6MiwiaWF0IjoxNzAxMTcxNjM5fQ.SjNd1bA9xtEsov0qKY7_02RnbbHKZB0hIdPUw5PXYZA
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -44,32 +43,17 @@ Content-Type: image/jpeg
 < ./cat.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-### Post media FAIL
-POST http://localhost:3000/api/media
-content-type: application/json
-
-{"msg": "HEllo"}
-
 ### Update media
-PUT http://localhost:3000/api/media/9590
+PUT http://localhost:3000/api/media/21
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNywidXNlcm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwidXNlcl9sZXZlbF9pZCI6MiwiaWF0IjoxNzAxMTY1MzA2fQ.4v0AflcPscBdHxYr-2qIeNLY1xJw1HAt6wmB18RnxSs
 content-type: application/json
 
 {
-  "filename": "updated.jpg",
-  "title": "Updated Media",
-  "description": "updated description",
-}
-
-### Update media FAIL
-PUT http://localhost:3000/api/media/260
-content-type: application/json
-
-{
-  "something": "this will fail",
 }
 
 ### Delete media
-DELETE http://localhost:3000/api/media/9590
+DELETE http://localhost:3000/api/media/19
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwidXNlcm5hbWUiOiJCb2IiLCJlbWFpbCI6ImJvYkBleGFtcGxlLmNvbSIsInVzZXJfbGV2ZWxfaWQiOjEsImlhdCI6MTcwMTE4Njg5Nn0.4lGkFtnWemfQwU_6M2iCjNGkgAu914EcDDEIUuLytpQ
 
 ## /api/users endpoint
 
@@ -77,7 +61,7 @@ DELETE http://localhost:3000/api/media/9590
 GET http://localhost:3000/api/users
 
 ### Get user by id
-GET http://localhost:3000/api/users/260
+GET http://localhost:3000/api/users/15
 
 ### Get user by id FAIL
 GET http://localhost:3000/api/users/959099
@@ -87,25 +71,20 @@ POST http://localhost:3000/api/users
 content-type: application/json
 
 {
-  "username": "Newuser",
-  "password": "newsecret",
-  "email": "newuser@example.com"
+  "username": "newUser",
+  "password": "newpassword",
+  "email": "bob2@example.com"
 }
 
-### Post users FAIL
-POST http://localhost:3000/api/users
-content-type: application/json
-
-{"msg": "HEllo"}
-
 ### Update user
-PUT http://localhost:3000/api/users/260
+PUT http://localhost:3000/api/users/27
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwidXNlcm5hbWUiOiJCb2IiLCJlbWFpbCI6ImJvYkBleGFtcGxlLmNvbSIsInVzZXJfbGV2ZWxfaWQiOjEsImlhdCI6MTcwMTE4NjY0Mn0.Ca6gdDkFWJ99-3R3pVt8Pyl5_7y7jc4AdPwur2768HQ
 content-type: application/json
 
 {
-  "username": "Newuser",
-  "password": "newsecret",
-  "email": "newuser@example.com"
+  "username": "JohnDoe3",
+  "password": "newpassword",
+  "email": "johndoe@example.com"
 }
 
 ### Update users FAIL
@@ -117,4 +96,16 @@ content-type: application/json
 }
 
 ### Delete users
-DELETE http://localhost:3000/api/users/260
+DELETE http://localhost:3000/api/users/15
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwidXNlcm5hbWUiOiJCb2IiLCJlbWFpbCI6ImJvYkBleGFtcGxlLmNvbSIsInVzZXJfbGV2ZWxfaWQiOjEsImlhdCI6MTcwMTE3MjM0N30.Km5PzhczaWeabfU_KmpsiGejWIHqPYTtJUiFI0v3Ud8
+
+### Post a comment
+
+POST http://localhost:3000/api/comments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwidXNlcm5hbWUiOiJBbm9uNTQ2OCIsImVtYWlsIjoiYW5vbjU0NjhAZXhhbXBsZS5jb20iLCJ1c2VyX2xldmVsX2lkIjoyLCJpYXQiOjE3MDExNzE5NzR9.OaryRK9Dq6YWry3_cHVVmi3ujWz5easQUw6DVZjiKok
+Content-Type: application/json
+
+{
+    "media_id": 19,
+    "comment_text": "Beautiful pic!"
+}

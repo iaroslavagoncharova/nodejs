@@ -1,39 +1,42 @@
 ### Get comments by media id
-GET http://localhost:3000/api/comments/media/60
+GET http://localhost:3000/api/comments/media/13
 
 ### Get comments by user id
-GET http://localhost:3000/api/comments/user/16
+GET http://localhost:3000/api/comments/user/10
 
 ### Post a comment
 
 POST http://localhost:3000/api/comments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNywidXNlcm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwidXNlcl9sZXZlbF9pZCI6MiwiaWF0IjoxNzAxMTY1MzA2fQ.4v0AflcPscBdHxYr-2qIeNLY1xJw1HAt6wmB18RnxSs
 Content-Type: application/json
 
 {
     "media_id": 19,
-    "user_id": 16,
-    "comment_text": "Beautiful cat!"
+    "comment_text": "Beautiful pic!"
 }
 
 ### Post a comment FAIL
 
 POST http://localhost:3000/api/comments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNywidXNlcm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwidXNlcl9sZXZlbF9pZCI6MiwiaWF0IjoxNzAxMTY1MzA2fQ.4v0AflcPscBdHxYr-2qIeNLY1xJw1HAt6wmB18RnxSs
 Content-Type: application/json
 
 {
     "media_id": 19,
-    "comment_text": "Beautiful cat!"
+    "comment_text": "Beautiful pic!"
 }
 
 ### Update a comment
 
-PUT http://localhost:3000/api/comments/1
+PUT http://localhost:3000/api/comments/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNywidXNlcm5hbWUiOiJKb2huRG9lMiIsImVtYWlsIjoiam9obmRvZUBleGFtcGxlLmNvbSIsInVzZXJfbGV2ZWxfaWQiOjIsImlhdCI6MTcwMTE4MzcwNX0.yPXV_aPGVZDrQKD0jhabiwtfKuaKB-C9zgoXx4K8VX4
 Content-Type: application/json
 
 {
-    "comment_text": "This is an updated comment"
+    "comment_text": "There is a new comment here"
 }
 
 ### Delete a comment
 
-DELETE http://localhost:3000/api/comments/11
+DELETE http://localhost:3000/api/comments/14
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwidXNlcm5hbWUiOiJCb2IiLCJlbWFpbCI6ImJvYkBleGFtcGxlLmNvbSIsInVzZXJfbGV2ZWxfaWQiOjEsImlhdCI6MTcwMTE3NTIxOH0.APN20-VLS5W4iQFvV8G_PiTLwUSfp4pX_T_wUusk_r0

@@ -27,44 +27,69 @@ const fetchUserById = async (id) => {
       }
 };
 
-const addUser = async (user) => {  
-    const {user_id, username, password, email, user_level_id, created_at} = user;
-    const sql = `INSERT INTO Users (user_id, username, password, email, user_level_id, created_at)
-             VALUES (?, ?, ?, ?, ?, ?)`;
-    const params = [user_id, username, password, email, user_level_id, created_at];
-    try {
+const addUser = async (user) => {
+  try {
+    const sql = `INSERT INTO Users (username, email, password, user_level_id)
+                VALUES (?, ?, ?, ?)`;              
+    const params = [user.username, user.email, user.password, 1];
     const result = await promisePool.query(sql, params);
-    console.log('result', result);
-    return {user_id: result[0].insertId};
-    } catch (e) {
+    if (result.error) {
+      return {error: result.error};
+    }
+    return result[0].insertId;
+  } catch (e) {
     console.error('error', e.message);
     return {error: e.message};
-    }
+  }
 };
 
-const changeUser = async (user, user_id) => {
-    const {username, password, email} = user;
-    const sql = `UPDATE Users SET username = ?, password = ?, email = ? WHERE user_id = ?`;
-    const params = [username, password, email, user_id];
+const changeUser = async (user, id) => {
+    const {username, password, email, tokenUserId, levelId} = user;
+    let sql;
+    let params;
     try {
-    const result = await promisePool.query(sql, params);
-    console.log('result', result);
-    return {user_id};
+      if (levelId === 1) {
+        sql = `UPDATE Users SET username = ?, password = ?, email = ? WHERE user_id = ?`;
+        params = [username, password, email, id];
+      } else {
+        sql = `UPDATE Users SET username = ?, password = ?, email = ? WHERE user_id = ? and user_id = ?`;
+        params = [username, password, email, id, tokenUserId];
+        if (tokenUserId !== id) {
+          return ({error: 'Not authorized', status: 403});
+        }
+      }
+      const result = await promisePool.query(sql, params);
+      if (result[0].affectedRows === 0) {
+        return ({error: 'Not found', status: 404});
+      }
+      console.log('result', result);
+      return {id};
     } catch (e) {
     console.error('error', e.message);
     return {error: e.message};
     }
 }
 
-const removeUser = async (id) => {
+const removeUser = async (id, tokenUserId, levelId) => {
+    let checkOff, checkOn, rows;
+    let params;
     try {
-        const params = [id];
-        const checkOff = await promisePool.query('SET FOREIGN_KEY_CHECKS=0', []);
-        const [rows] = await promisePool.query('DELETE FROM Users WHERE user_id=?', params);
-        const checkOn = await promisePool.query('SET FOREIGN_KEY_CHECKS=1', []);
-        console.log('rows', rows);
+      if (levelId === 1) {
+        params = [id];
+        checkOff = await promisePool.query('SET FOREIGN_KEY_CHECKS=0', []);
+        [rows] = await promisePool.query('DELETE FROM Users WHERE user_id=?', params);
+        checkOn = await promisePool.query('SET FOREIGN_KEY_CHECKS=1', []);
+      } else {
+        params = [id, tokenUserId];
+        checkOff = await promisePool.query('SET FOREIGN_KEY_CHECKS=0', []);
+        [rows] = await promisePool.query('DELETE FROM Users WHERE user_id=? AND user_id=?', params);
+        checkOn = await promisePool.query('SET FOREIGN_KEY_CHECKS=1', []);
+        if (tokenUserId !== id) {
+          return ({error: 'Not authorized', status: 403});
+        }
+      }
         if (rows.affectedRows === 0) {
-          return false;
+          return ({error: 'Not found', status: 404});
         }
         return true;
       } catch (e) {
