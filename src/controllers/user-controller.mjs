@@ -1,5 +1,6 @@
 import {fetchAllUsers, fetchUserById, addUser, changeUser, removeUser, login} from '../models/user-model.mjs';
 import { validationResult } from 'express-validator';
+import bcrypt from 'bcryptjs';
 
 const getUsers = async (req, res) => {
     const Users = await fetchAllUsers();
@@ -27,7 +28,11 @@ const postUser = async (req, res, next) => {
     error.status = 400;
     return next(error);
   }
-    const newUserId = await addUser(req.body);
+  const newUser = req.body;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newUser.password, salt);
+    newUser.password = hashedPassword;
+    const newUserId = await addUser(newUser);
     if (newUserId.error) {
       const error = new Error(newUserId.error);
       error.status = newUserId.status || 500;

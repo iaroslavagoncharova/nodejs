@@ -7,7 +7,7 @@ GET http://localhost:3000/api/comments/user/10
 ### Post a comment
 
 POST http://localhost:3000/api/comments
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNywidXNlcm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwidXNlcl9sZXZlbF9pZCI6MiwiaWF0IjoxNzAxMTY1MzA2fQ.4v0AflcPscBdHxYr-2qIeNLY1xJw1HAt6wmB18RnxSs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwidXNlcm5hbWUiOiJBbm9uNTQ2OCIsImVtYWlsIjoiYW5vbjU0NjhAZXhhbXBsZS5jb20iLCJ1c2VyX2xldmVsX2lkIjoyLCJpYXQiOjE3MDExNzE5NzR9.OaryRK9Dq6YWry3_cHVVmi3ujWz5easQUw6DVZjiKok
 Content-Type: application/json
 
 {
@@ -22,8 +22,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNywid
 Content-Type: application/json
 
 {
-    "media_id": 19,
-    "comment_text": "Beautiful pic!"
+    "field": 15
 }
 
 ### Update a comment

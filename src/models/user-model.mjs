@@ -43,20 +43,16 @@ const addUser = async (user) => {
   }
 };
 
-const changeUser = async (user, id) => {
-    const {username, password, email, tokenUserId, levelId} = user;
+const changeUser = async (username) => {
     let sql;
     let params;
     try {
       if (levelId === 1) {
-        sql = `UPDATE Users SET username = ?, password = ?, email = ? WHERE user_id = ?`;
-        params = [username, password, email, id];
+        sql = `UPDATE Users SET username = ?, password = ?, email = ? WHERE username = ?`;
+        params = [username];
       } else {
-        sql = `UPDATE Users SET username = ?, password = ?, email = ? WHERE user_id = ? and user_id = ?`;
-        params = [username, password, email, id, tokenUserId];
-        if (tokenUserId !== id) {
-          return ({error: 'Not authorized', status: 403});
-        }
+        sql = `UPDATE Users SET username = ?, password = ?, email = ? WHERE username = ?`;
+        params = [username];
       }
       const result = await promisePool.query(sql, params);
       if (result[0].affectedRows === 0) {

@@ -1,0 +1,16 @@
+## auth/login
+### POST /api/auth/login
+POST http://localhost:3000/api/auth/login
+content-type: application/json
+
+{"username": "Bob", "password": "newsecret"}
+
+### POST /api/auth/login
+POST http://localhost:3000/api/auth/login
+content-type: application/json
+
+{"username": "JohnDoe3", "password": "newpassword"}
+
+### GET my user info
+GET http://localhost:3000/api/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNywidXNlcm5hbWUiOiJKb2huRG9lIiwiZW1haWwiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwidXNlcl9sZXZlbF9pZCI6MiwiaWF0IjoxNzAxMTY1MzA2fQ.4v0AflcPscBdHxYr-2qIeNLY1xJw1HAt6wmB18RnxSs
