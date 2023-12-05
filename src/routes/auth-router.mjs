@@ -4,18 +4,17 @@ import { authenticateToken } from '../middlewares/authentication.mjs';
 
 const authRouter = express.Router();
 
-// routes for /api/auth
 /**
  * @apiDefine all No authentication needed.
  */
 
 /**
- * @apiDefine token Logged in user access only
- * Valid authentication token must be provided within request.
+ * @apiDefine admin Admin user token needed
  */
 
 /**
- * @apiDefine admin Admin user token needed
+ * @apiDefine token Logged in user access only
+ * Valid authentication token must be provided within request.
  */
 
 /**
@@ -71,6 +70,8 @@ const authRouter = express.Router();
  * @apiUse UnauthorizedError
  */
 authRouter.route('/login').post(postLogin);
+
+
 /**
  * @api {get} /auth/me Request information about current user
  * @apiVersion 1.0.0

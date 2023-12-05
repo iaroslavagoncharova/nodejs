@@ -7,6 +7,8 @@ import authRouter from './routes/auth-router.mjs';
 import { logger } from './middlewares/middlewares.mjs';
 import commentsRouter from './routes/comments-router.mjs';
 import {notFoundHandler, errorHandler} from './middlewares/middlewares.mjs';
+import helmet from 'helmet';
+import session from 'cookie-session';
 
 const hostname = '127.0.0.1';
 const app = express();
@@ -17,6 +19,28 @@ const __dirname = path.dirname(__filename);
 app.set('view engine', 'pug');
 app.set('views', 'src/views')
 app.disable('x-powered-by');
+app.use(helmet());
+
+const expiryDate = new Date(Date.now() + 60 * 60 * 1000);
+
+app.use(
+  session({
+    name: 'session',
+    keys: ['key1', 'key2'],
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      domain: 'localhost',
+      path: '/',
+      expires: expiryDate,
+    },
+  })
+);
+
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', "script-src 'self' 'unsafe-eval'");
+  next();
+});
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -27,11 +51,11 @@ app.use('/media', express.static(path.join(__dirname, '../uploads')));
 // simple custom middleware for logging/debugging all requests
 app.use(logger);
 
-// render pug a file (home.pug) example
-app.get('/', (req, res) => {
-  const values = {title: "Media REST API", message: "This API has a basic functionality and can be used to retrieve, create, change, or delete mock data, such as media objects or users. This functionality is achieved by using basic REST-methods, such as GET, POST, PUT and DELETE, and displaying status codes 200, 201, 204, 404 and 400. Mock media files are also present as real images and can be served anywhere in the API"};
-  res.render('home', values);
-});
+// // render pug a file (home.pug) example
+// app.get('/', (req, res) => {
+//   const values = {title: "Media REST API", message: "This API has a basic functionality and can be used to retrieve, create, change, or delete mock data, such as media objects or users. This functionality is achieved by using basic REST-methods, such as GET, POST, PUT and DELETE, and displaying status codes 200, 201, 204, 404 and 400. Mock media files are also present as real images and can be served anywhere in the API"};
+//   res.render('home', values);
+// });
 
 // auth endpoints
 app.use('/api/auth', authRouter);
