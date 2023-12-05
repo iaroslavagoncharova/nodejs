@@ -48,14 +48,7 @@ app.use('/docs', express.static(path.join(__dirname, '../docs')));
 // serve uploaded mediafiles url: /media/{file}
 app.use('/media', express.static(path.join(__dirname, '../uploads')));
 
-// simple custom middleware for logging/debugging all requests
 app.use(logger);
-
-// // render pug a file (home.pug) example
-// app.get('/', (req, res) => {
-//   const values = {title: "Media REST API", message: "This API has a basic functionality and can be used to retrieve, create, change, or delete mock data, such as media objects or users. This functionality is achieved by using basic REST-methods, such as GET, POST, PUT and DELETE, and displaying status codes 200, 201, 204, 404 and 400. Mock media files are also present as real images and can be served anywhere in the API"};
-//   res.render('home', values);
-// });
 
 // auth endpoints
 app.use('/api/auth', authRouter);
