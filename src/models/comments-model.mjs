@@ -8,7 +8,7 @@ const getCommentByMediaId = async (id) => {
         console.log('rows', rows);
         if (rows.length === 0) {
           return false;
-      }
+        }
         return rows;
       } catch (e) {
         console.error('error', e.message);

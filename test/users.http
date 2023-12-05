@@ -14,9 +14,9 @@ POST http://localhost:3000/api/users
 content-type: application/json
 
 {
-  "username": "newUser",
+  "username": "newUser2",
   "password": "newpassword",
-  "email": "newuser@example.com"
+  "email": "newuser2@example.com"
 }
 
 ### Update user
@@ -27,6 +27,7 @@ content-type: application/json
 {
   "username": "JohnDoe3",
   "password": "newpassword",
+  "user_level_id": 1,
   "email": "johndoe@example.com"
 }
 

@@ -1,5 +1,5 @@
 ### Get comments by media id
-GET http://localhost:3000/api/comments/media/13
+GET http://localhost:3000/api/comments/media/1
 
 ### Get comments by user id
 GET http://localhost:3000/api/comments/user/10
@@ -11,7 +11,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwid
 Content-Type: application/json
 
 {
-    "media_id": 19,
+    "media_id": 20,
     "comment_text": "Beautiful pic!"
 }
 

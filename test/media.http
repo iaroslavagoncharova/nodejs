@@ -4,7 +4,7 @@
 GET http://localhost:3000/api/media
 
 ### Get a media item by id
-GET http://localhost:3000/api/media/30
+GET http://localhost:3000/api/media/300
 
 ### Get media by id FAIL
 GET http://localhost:3000/api/media/959099

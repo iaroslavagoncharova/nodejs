@@ -51,10 +51,9 @@ const putUser = async (req, res, next) => {
   }
     const user_id = +req.params.id;
     const tokenUserId = req.user.user_id;
-    const levelId = req.user.user_level_id;
     const {username, password, email} = req.body;
     if (username && password && email) {
-      const updatedUser = {username, password, email, tokenUserId, levelId};
+      const updatedUser = {username, password, email, tokenUserId};
       const result = await changeUser(updatedUser, user_id);
       if (result.error) {
         const error = new Error(result.error);

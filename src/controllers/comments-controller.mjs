@@ -4,9 +4,6 @@ import { getCommentByMediaId, getCommentByUserId, createComment, updateComment, 
 const getMediaComments = async (req, res) => {
     const result = await getCommentByMediaId(req.params.id); 
     if (result) {
-      if (result.error) {
-      res.status(500);
-      }
       res.json(result);
     } else {
         res.status(404);

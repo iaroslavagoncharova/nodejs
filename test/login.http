@@ -3,13 +3,13 @@
 POST http://localhost:3000/api/auth/login
 content-type: application/json
 
-{"username": "Bob", "password": "newsecret"}
+{"username": "AdminUser", "password": "to-be-hashed-pw4"}
 
 ### POST /api/auth/login
 POST http://localhost:3000/api/auth/login
 content-type: application/json
 
-{"username": "JohnDoe3", "password": "newpassword"}
+{"username": "AdminUser", "password": "to-be-hashed-pw4"}
 
 ### GET my user info
 GET http://localhost:3000/api/auth/me
