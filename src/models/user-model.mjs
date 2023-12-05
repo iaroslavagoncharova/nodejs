@@ -30,7 +30,7 @@ const fetchUserById = async (id) => {
 const addUser = async (user) => {
   try {
     const sql = `INSERT INTO Users (username, email, password, user_level_id)
-                VALUES (?, ?, ?, ?)`;              
+                VALUES (?, ?, ?, ?)`;
     const params = [user.username, user.email, user.password, 1];
     const result = await promisePool.query(sql, params);
     if (result.error) {
@@ -94,17 +94,18 @@ const removeUser = async (id, tokenUserId, levelId) => {
       }
 };
 
-const login = async (userCreds) => {
+const login = async (username) => {
   try {
-    const sql = 'SELECT user_id, username, email, user_level_id FROM Users WHERE username=? AND password=?';
-    const params = [userCreds.username, userCreds.password];
+    const sql = 'SELECT user_id, username, password, email, user_level_id FROM Users WHERE username = ?';
+    const params = [username];
     const result = await promisePool.query(sql, params);
     const [rows] = result;
     return rows[0];
-    } catch (e) {
-      console.error('error', e.message);
-      return {error: e.message};
-    }
+  } catch (e) {
+    console.error('error', e.message);
+    return { error: e.message };
+  }
 };
+
 
 export {fetchAllUsers, fetchUserById, addUser, changeUser, removeUser, login};

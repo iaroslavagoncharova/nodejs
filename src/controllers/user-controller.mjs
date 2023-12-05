@@ -8,7 +8,7 @@ const getUsers = async (req, res) => {
 };
 
 const getUsersById = async (req, res) => {
-    const result = await fetchUserById(req.params.id); 
+    const result = await fetchUserById(req.params.id);
     if (result) {
       if (result.error) {
       res.status(500);
@@ -20,7 +20,7 @@ const getUsersById = async (req, res) => {
     }
 };
 
-const postUser = async (req, res, next) => {
+const postUser = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log('validation errors', errors.array());
@@ -28,7 +28,7 @@ const postUser = async (req, res, next) => {
     error.status = 400;
     return next(error);
   }
-  const newUser = req.body;
+    const newUser = req.body;
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newUser.password, salt);
     newUser.password = hashedPassword;
@@ -61,7 +61,7 @@ const putUser = async (req, res, next) => {
         return next(error);
     }
       res.status(201).json({message: 'User updated', ...result});
-  } 
+  }
 };
 
 const deleteUser = async (req, res, next) => {
@@ -75,7 +75,7 @@ const deleteUser = async (req, res, next) => {
     const user_id = +req.params.id;
     const tokenUserId = req.user.user_id;
     const levelId = req.user.user_level_id;
-    const result = await removeUser(user_id, tokenUserId, levelId); 
+    const result = await removeUser(user_id, tokenUserId, levelId);
     if (result.error) {
       const error = new Error(result.error);
       error.status = result.status || 500;
